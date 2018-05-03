@@ -132,6 +132,7 @@ leave_fullscreen() {
 
 handle_sigint() {
   leave_fullscreen
+  show_cursor
   S="$?"
   kill 0
   exit $S
@@ -139,6 +140,7 @@ handle_sigint() {
 
 handle_sigtstp() {
   leave_fullscreen
+  show_cursor
   kill -s SIGSTOP $$
 }
 
@@ -321,6 +323,7 @@ list_versions_installed() {
 
 display_versions() {
   enter_fullscreen
+  hide_cursor
   check_current_version
   tput clear
   display_versions_with_selected $active
@@ -363,12 +366,14 @@ display_versions() {
       "q")
         tput clear
         leave_fullscreen
+        show_cursor
         exit
         ;;
       "")
         # enter key returns empty string
         activate $selected
         leave_fullscreen
+        show_cursor
         echo $selected
         exit
         ;;
